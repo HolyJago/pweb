@@ -1,26 +1,26 @@
-package br.unisul.web.domain;
+package br.unisul.web.dtos;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import br.unisul.web.domain.Categoria;
 
-@Entity
-public class Categoria implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class CategoriaDto implements Serializable {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	private String nome;
 	
-	public Categoria() {
+	public CategoriaDto(Categoria c) {
+		id = c.getId();
+		nome = c.getNome();
+	}
+	
+	public CategoriaDto() {
 		
 	}
 	
-	public Categoria(Integer id, String nome) {
+	public CategoriaDto(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
@@ -52,7 +52,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		CategoriaDto other = (CategoriaDto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -60,5 +60,5 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

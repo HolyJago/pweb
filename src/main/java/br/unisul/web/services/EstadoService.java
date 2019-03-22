@@ -34,13 +34,13 @@ public class EstadoService {
 	}
 	
 	//DELETAR
-		public void delete (Integer id) {
-			find(id);
-			repEst.deleteById(id);
-		}
+	public void delete (Integer id) {
+		find(id);
+		repEst.deleteById(id);
+	}
 		
-		//LISTAR TODAS
-		public List<Estado> findAll(){
-			return repEst.findAll();
-		}
+	//LISTAR TODAS
+	public List<Estado> findAll(){
+		return repEst.findAll();
+	}
 }

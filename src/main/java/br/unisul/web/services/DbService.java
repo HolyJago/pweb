@@ -14,9 +14,9 @@ import br.unisul.web.repositories.EstadoRepository;
 @Service
 public class DbService {
 	@Autowired
-	private CategoriaRepository repCat;
+	private CategoriaRepository catRep;
 	@Autowired
-	private EstadoRepository repEst;
+	private EstadoRepository estRep;
 	
 	public void inicializaBancoDeDados() throws ParseException {
 		
@@ -28,7 +28,7 @@ public class DbService {
 		Categoria cat6 = new Categoria(null, "Decoração");
 		Categoria cat7 = new Categoria(null, "Perfumaria");
 		
-		repCat.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
+		catRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		
 		Estado est1 = new Estado(null, "Santa Catarina");
 		Estado est2 = new Estado(null, "São Paulo");
@@ -38,7 +38,7 @@ public class DbService {
 		Estado est6 = new Estado(null, "Distrito Federal");
 		Estado est7 = new Estado(null, "Bahia");
 		
-		repEst.saveAll(Arrays.asList(est1, est2, est3, est4, est5, est6, est7));
+		estRep.saveAll(Arrays.asList(est1, est2, est3, est4, est5, est6, est7));
 	}
 	
 }

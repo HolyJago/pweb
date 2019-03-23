@@ -11,6 +11,8 @@ private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nome;
 	
+	
+	
 	public CategoriaDto(Categoria c) {
 		id = c.getId();
 		nome = c.getNome();

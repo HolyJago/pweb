@@ -13,34 +13,34 @@ import br.unisul.web.repositories.EstadoRepository;
 public class EstadoService {
 	
 	@Autowired
-	private  EstadoRepository repEst;
+	private  EstadoRepository rep;
 	
 	// BUSCAR POR ID
 	public Estado find (Integer id) {
-		Optional<Estado> obj = repEst.findById(id);
+		Optional<Estado> obj = rep.findById(id);
 		return obj.orElse(null);
 	}
 	
 	// FAZER INSERÇÃO
 	public Estado insert (Estado obj) {
 		obj.setId(null);
-		return repEst.save(obj);
+		return rep.save(obj);
 	}
 	
 	// ATUALIZAR CATEGORIA SERVICE
 	public Estado update (Estado obj) {
 		find(obj.getId());
-		return repEst.save(obj);
+		return rep.save(obj);
 	}
 	
 	//DELETAR
 	public void delete (Integer id) {
 		find(id);
-		repEst.deleteById(id);
+		rep.deleteById(id);
 	}
 		
 	//LISTAR TODAS
 	public List<Estado> findAll(){
-		return repEst.findAll();
+		return rep.findAll();
 	}
 }

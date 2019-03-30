@@ -7,14 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.unisul.web.domain.Categoria;
+import br.unisul.web.domain.Cidade;
+import br.unisul.web.domain.Cliente;
+import br.unisul.web.domain.Endereco;
 import br.unisul.web.domain.Estado;
 import br.unisul.web.domain.Produto;
+import br.unisul.web.domain.enums.TipoCliente;
 import br.unisul.web.repositories.CategoriaRepository;
+import br.unisul.web.repositories.CidadeRepository;
+import br.unisul.web.repositories.ClienteRepository;
+import br.unisul.web.repositories.EnderecoRepository;
 import br.unisul.web.repositories.EstadoRepository;
 import br.unisul.web.repositories.ProdutoRepository;
 
 @Service
 public class DbService {
+	
 	@Autowired
 	private CategoriaRepository catRep;
 	
@@ -23,6 +31,15 @@ public class DbService {
 	
 	@Autowired
 	private ProdutoRepository prodRep;
+	
+	@Autowired
+	private CidadeRepository cidRep;
+	
+	@Autowired
+	private ClienteRepository cliRep;
+	
+	@Autowired
+	private EnderecoRepository endRep;
 	
 	public void inicializaBancoDeDados() throws ParseException {
 		
@@ -34,21 +51,37 @@ public class DbService {
 		Categoria cat6 = new Categoria(null, "Decoração");
 		Categoria cat7 = new Categoria(null, "Perfumaria");
 		
+		Estado e1 = new Estado(null, "Paraná");
+		Estado e2 = new Estado(null, "Santa Catarina");
+		Estado e3 = new Estado(null, "Rio Grande do Sul");
 		
+		Cidade c1 = new Cidade(null, "Curitiba", e1);
+		Cidade c2 = new Cidade(null, "Tubarão", e2);
+		Cidade c3 = new Cidade(null, "Gravatal", e2);
+		Cidade c4 = new Cidade(null, "Laguna", e2);
+		Cidade c5 = new Cidade(null, "Porto Alegre", e3);
+		Cidade c6 = new Cidade(null, "Guaíba", e3);
 		
-		Estado est1 = new Estado(null, "Santa Catarina");
-		Estado est2 = new Estado(null, "São Paulo");
-		Estado est3 = new Estado(null, "Mato Grosso");
-		Estado est4 = new Estado(null, "Paraná");
-		Estado est5 = new Estado(null, "Rio Grande do Sul");
-		Estado est6 = new Estado(null, "Distrito Federal");
-		Estado est7 = new Estado(null, "Bahia");
+		e1.getCidades().addAll(Arrays.asList(c1));
+		e2.getCidades().addAll(Arrays.asList(c2, c3, c4));
+		e3.getCidades().addAll(Arrays.asList(c5, c6));
 		
-		estRep.saveAll(Arrays.asList(est1, est2, est3, est4, est5, est6, est7));
+		Cliente cli = new Cliente(null,"Gustavo Zancheta", "gustavo.zikavirus@gmail.com", "01201201210", TipoCliente.PESSOAFISICA );
+		cli.getTelefones().addAll(Arrays.asList("49992499831","48991848674"));
+		
+		Endereco en1 = new Endereco(null, "Rua dos Ferroviarios", "767","Casa", "Aquele", "88702260", cli, c2);
+		Endereco en2 = new Endereco(null, "Rua Princesa Andrômeda", "777","Trabalho" ,"Machitos", "88702702", cli, c2);
+		cli.getEnderecos().addAll(Arrays.asList(en1, en2));
+		
+		estRep.saveAll(Arrays.asList(e1,e2,e3));
+		cidRep.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
+		
+		cliRep.saveAll(Arrays.asList(cli));
+		endRep.saveAll(Arrays.asList(en1,en2));
 		
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
-		Produto p3 = new Produto(null, "Mouse", 100.00);
+		Produto p3 = new Produto(null, "Mouse", 80.00);
 		p1.getCategorias().addAll(Arrays.asList(cat1));
 		p2.getCategorias().addAll(Arrays.asList(cat1,cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
@@ -58,6 +91,7 @@ public class DbService {
 		catRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		prodRep.saveAll(Arrays.asList(p1,p2,p3));
 		
+		
 	}
-	
+
 }

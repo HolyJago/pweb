@@ -1,6 +1,7 @@
 package br.unisul.web.services;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import br.unisul.web.domain.Cidade;
 import br.unisul.web.domain.Cliente;
 import br.unisul.web.domain.Endereco;
 import br.unisul.web.domain.Estado;
+import br.unisul.web.domain.ItemPedido;
+import br.unisul.web.domain.Pedido;
 import br.unisul.web.domain.Produto;
 import br.unisul.web.domain.enums.TipoCliente;
 import br.unisul.web.repositories.CategoriaRepository;
@@ -18,28 +21,36 @@ import br.unisul.web.repositories.CidadeRepository;
 import br.unisul.web.repositories.ClienteRepository;
 import br.unisul.web.repositories.EnderecoRepository;
 import br.unisul.web.repositories.EstadoRepository;
+import br.unisul.web.repositories.ItemPedidoRepository;
+import br.unisul.web.repositories.PedidoRepository;
 import br.unisul.web.repositories.ProdutoRepository;
 
 @Service
 public class DbService {
 	
 	@Autowired
-	private CategoriaRepository catRep;
+	private CategoriaRepository categoriaRepository;
 	
 	@Autowired
-	private EstadoRepository estRep;
+	private EstadoRepository estadoRepository;
 	
 	@Autowired
-	private ProdutoRepository prodRep;
+	private ProdutoRepository produtoRepository;
 	
 	@Autowired
-	private CidadeRepository cidRep;
+	private CidadeRepository cidadeRepository;
 	
 	@Autowired
-	private ClienteRepository cliRep;
+	private ClienteRepository clienteRepository;
 	
 	@Autowired
-	private EnderecoRepository endRep;
+	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public void inicializaBancoDeDados() throws ParseException {
 		
@@ -66,18 +77,19 @@ public class DbService {
 		e2.getCidades().addAll(Arrays.asList(c2, c3, c4));
 		e3.getCidades().addAll(Arrays.asList(c5, c6));
 		
-		Cliente cli = new Cliente(null,"Gustavo Zancheta", "gustavo.zikavirus@gmail.com", "01201201210", TipoCliente.PESSOAFISICA );
-		cli.getTelefones().addAll(Arrays.asList("49992499831","48991848674"));
+		Cliente cli1 = new Cliente(null,"Gustavo Zancheta", "gustavo.zikavirus@gmail.com", "01201201210", TipoCliente.PESSOAFISICA );
+		cli1.getTelefones().addAll(Arrays.asList("49992499831","48991848674"));
 		
-		Endereco en1 = new Endereco(null, "Rua dos Ferroviarios", "767","Casa", "Aquele", "88702260", cli, c2);
-		Endereco en2 = new Endereco(null, "Rua Princesa Andrômeda", "777","Trabalho" ,"Machitos", "88702702", cli, c2);
-		cli.getEnderecos().addAll(Arrays.asList(en1, en2));
+		Endereco en1 = new Endereco(null, "Rua dos Ferroviarios", "767","Casa", "Aquele", "88702260", cli1, c2);
+		Endereco en2 = new Endereco(null, "Rua Princesa Andrômeda", "777","Trabalho" ,"Machitos", "88702702", cli1, c2);
+		cli1.getEnderecos().addAll(Arrays.asList(en1, en2));
 		
-		estRep.saveAll(Arrays.asList(e1,e2,e3));
-		cidRep.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
+		estadoRepository.saveAll(Arrays.asList(e1,e2,e3));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
 		
-		cliRep.saveAll(Arrays.asList(cli));
-		endRep.saveAll(Arrays.asList(en1,en2));
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(en1,en2));
+		
 		
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
@@ -88,9 +100,28 @@ public class DbService {
 		cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
 		
-		catRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
-		prodRep.saveAll(Arrays.asList(p1,p2,p3));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
+		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, en1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, en2);
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 	}
 

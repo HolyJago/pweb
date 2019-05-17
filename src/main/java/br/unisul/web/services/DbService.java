@@ -11,15 +11,15 @@ import br.unisul.web.domain.Categoria;
 import br.unisul.web.domain.Cidade;
 import br.unisul.web.domain.Cliente;
 import br.unisul.web.domain.Endereco;
+import br.unisul.web.repositories.CategoriaRepository;
+import br.unisul.web.repositories.CidadeRepository;
+import br.unisul.web.repositories.ClienteRepository;
+import br.unisul.web.repositories.EnderecoRepository;
 import br.unisul.web.domain.Estado;
 import br.unisul.web.domain.ItemPedido;
 import br.unisul.web.domain.Pedido;
 import br.unisul.web.domain.Produto;
 import br.unisul.web.domain.enums.TipoCliente;
-import br.unisul.web.repositories.CategoriaRepository;
-import br.unisul.web.repositories.CidadeRepository;
-import br.unisul.web.repositories.ClienteRepository;
-import br.unisul.web.repositories.EnderecoRepository;
 import br.unisul.web.repositories.EstadoRepository;
 import br.unisul.web.repositories.ItemPedidoRepository;
 import br.unisul.web.repositories.PedidoRepository;
@@ -77,19 +77,8 @@ public class DbService {
 		e2.getCidades().addAll(Arrays.asList(c2, c3, c4));
 		e3.getCidades().addAll(Arrays.asList(c5, c6));
 		
-		Cliente cli1 = new Cliente(null,"Gustavo Zancheta", "gustavo.zikavirus@gmail.com", "01201201210", TipoCliente.PESSOAFISICA );
-		cli1.getTelefones().addAll(Arrays.asList("49992499831","48991848674"));
-		
-		Endereco en1 = new Endereco(null, "Rua dos Ferroviarios", "767","Casa", "Aquele", "88702260", cli1, c2);
-		Endereco en2 = new Endereco(null, "Rua Princesa Andrômeda", "777","Trabalho" ,"Machitos", "88702702", cli1, c2);
-		cli1.getEnderecos().addAll(Arrays.asList(en1, en2));
-		
 		estadoRepository.saveAll(Arrays.asList(e1,e2,e3));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
-		
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(en1,en2));
-		
 		
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
@@ -103,10 +92,20 @@ public class DbService {
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
+		Cliente cli1 = new Cliente(null, "Handsome Jack", "Handsome@Hyperion.net", "00000000000", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("48000000000", "48111111111"));
+		
+		Endereco end1 = new Endereco(null, "Pandora", "0", "Lunar Base", "Hyperion", "00000000", cli1, c2);
+		Endereco end2 = new Endereco(null, "Promethea", "1", "Sanctuary", "Catch", "000000000", cli1, c2);
+	
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, en1);
-		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, en2);
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, end1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, end2);
+		
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		
@@ -121,8 +120,8 @@ public class DbService {
 		p2.getItens().addAll(Arrays.asList(ip3));
 		p3.getItens().addAll(Arrays.asList(ip2));
 
-		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
-		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));	
+	
 	}
 
 }

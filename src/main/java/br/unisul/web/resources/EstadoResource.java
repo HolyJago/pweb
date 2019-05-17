@@ -30,16 +30,23 @@ public class EstadoResource {
 	
 	@Autowired
 	private CidadeService cidadeService;
+
+	//LISTAR CIDADES DE UM ESTADO
+	@RequestMapping(value="/{estadoId}/cidades", method=RequestMethod.GET)
+	public ResponseEntity<List<CidadeDto>> findCidades(@PathVariable Integer estadoId) {
+		List<Cidade> list = cidadeService.findByEstado(estadoId);
+		List<CidadeDto> listDto = list.stream().map(obj -> new CidadeDto(obj)).collect(Collectors.toList());  
+		return ResponseEntity.ok().body(listDto);
+	}
 	
-	
-	//BUSCAR POR ID
+	// Buscar por Id
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<Estado> find(@PathVariable Integer id){
 		Estado obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	//INSERIR
+	// Inserir
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void>insert(@RequestBody Estado obj){
 		obj = service.insert(obj);
@@ -47,8 +54,8 @@ public class EstadoResource {
 				path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
-	// ATUALIZAR CATEGORIA RESOURCE
+
+	// Atualiza
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Estado obj, @PathVariable Integer id){
 		obj.setId(id);
@@ -56,31 +63,26 @@ public class EstadoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-		//EXCLUIR
-		@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-		public ResponseEntity<Void> delete(@PathVariable Integer id) {
-			service.delete(id);
-			return ResponseEntity.noContent().build();
+	// Exclui
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+		
+	// Lista todas
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<EstadoDto>> findAll() {
+		List<Estado> lista = service.findAll();
+		
+		// Ou for pra percorrer a lista
+		List<EstadoDto> listDto = new ArrayList<EstadoDto>();
+		
+		for (Estado e : lista) {
+			listDto.add(new EstadoDto(e));
 		}
 		
-		//LISTAR CIDADES DE UM ESTADO
-		@RequestMapping(value="/{estadoId}/cidades", method=RequestMethod.GET)
-		public ResponseEntity<List<CidadeDto>> findCidades(@PathVariable Integer estadoId) {
-			List<Cidade> list = cidadeService.findByEstado(estadoId);
-			List<CidadeDto> listDto = list.stream().map(obj -> new CidadeDto(obj)).collect(Collectors.toList());  
-			return ResponseEntity.ok().body(listDto);
-		}
-		
-		//LISTAR TODAS
-		@RequestMapping(method=RequestMethod.GET)
-		public ResponseEntity<List<EstadoDto>> findAll() {
-			List<Estado> lista = service.findAll();
-			//ou for para percorrer a lista
-			List<EstadoDto> listaDto = new ArrayList<EstadoDto>();
-			
-			for (Estado e : lista) {
-				listaDto.add(new EstadoDto(e));
-			}
-			return ResponseEntity.ok().body(listaDto);
-		}
+		return ResponseEntity.ok().body(listDto);
+	}
+	
 }

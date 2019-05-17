@@ -12,9 +12,6 @@ import br.unisul.web.domain.Produto;
 public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
 	
 	
-	List<Produto> findDistinctByNomeContainingAndCategoriasIn(
-			String nome,
-			List<Categoria> categorias
-	);
+	List<Produto> findDistinctByNomeContainingAndCategoriasIn(String nome, List<Categoria> categorias);
 
 }

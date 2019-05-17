@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -25,36 +25,17 @@ public class Estado implements Serializable {
 	@OneToMany(mappedBy="estado")
 	private List<Cidade> cidades = new ArrayList<>();
 	
-	
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
-
+	// Construtor vazio - é o que o framework exige
 	public Estado() {
+	}	
 		
-	}
-	
+	// Construtor
 	public Estado(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+	// hashCode() & equals() - id 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -62,6 +43,7 @@ public class Estado implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -79,4 +61,31 @@ public class Estado implements Serializable {
 		return true;
 	}
 
+	
+	// Getters & Setters - id
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	// Getters & Setters - nome
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	
+	// Getters & Setters - Cidades
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
+	
 }

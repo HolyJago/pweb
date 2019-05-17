@@ -10,11 +10,11 @@ import br.unisul.web.repositories.CidadeRepository;
 
 @Service
 public class CidadeService {
-
+	
 	@Autowired
 	private CidadeRepository rep;
-	
-	public List<Cidade> findByEstado(Integer estadoId){
+
+	public List<Cidade> findByEstado(Integer estadoId) {
 		return rep.findCidades(estadoId);
 	}
 }

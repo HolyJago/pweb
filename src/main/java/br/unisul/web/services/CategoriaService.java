@@ -15,32 +15,38 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository rep;
 	
-	// BUSCAR POR ID
+	// Buscar por ID.
 	public Categoria find (Integer id) {
 		Optional<Categoria> obj = rep.findById(id);
 		return obj.orElse(null);
 	}
 	
-	// FAZER INSERÇÃO
+	// Método que faz inserção.
 	public Categoria insert (Categoria obj) {
 		obj.setId(null);
 		return rep.save(obj);
 	}
-	
-	// ATUALIZAR CATEGORIA SERVICE
+
+	// Atualiza BD.
 	public Categoria update (Categoria obj) {
 		find(obj.getId());
 		return rep.save(obj);
 	}
 	
-	//DELETAR
-		public void delete (Integer id) {
-			find(id);
-			rep.deleteById(id);
-		}
-		
-		//LISTAR TODAS
-		public List<Categoria> findAll(){
-			return rep.findAll();
-		}
+	// Deletar.
+	public void delete (Integer id) {
+		find(id);
+		rep.deleteById(id);
+	}
+	
+	// Listar todas.
+	public List<Categoria> findAll(){
+		return rep.findAll();
+	}
+	
+	// Busca por nome.
+	public List<Categoria> search (String nome){
+		return rep.findDistinctByNomeContainingOrderByNome(nome);
+	}
+	
 }

@@ -21,15 +21,20 @@ public class ItemPedidoPK implements Serializable {
 	public Pedido getPedido() {
 		return pedido;
 	}
+	
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
+	
 	public Produto getProduto() {
 		return produto;
 	}
+	
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -38,6 +43,7 @@ public class ItemPedidoPK implements Serializable {
 		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -59,4 +65,7 @@ public class ItemPedidoPK implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 }
+

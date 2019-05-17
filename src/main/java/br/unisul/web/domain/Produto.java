@@ -11,9 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,6 +41,18 @@ public class Produto implements Serializable{
 	@OneToMany(mappedBy="id.produto")
 	private Set<ItemPedido> itens = new HashSet<>();
 	
+	
+	@JsonIgnore
+	public List<Pedido> getPedidos(){
+		List<Pedido> lista = new ArrayList<>();
+		for (ItemPedido x : itens) {
+			lista.add(x.getPedido());
+		}
+		return lista;
+	}
+	
+	
+	
 	public Produto() {
 		
 	}
@@ -50,15 +62,6 @@ public class Produto implements Serializable{
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
-	}
-	
-	@JsonIgnore
-	public List<Pedido> getPedidos() {
-		List<Pedido> lista = new ArrayList<>();
-		for (ItemPedido x : itens) {
-			lista.add(x.getPedido());
-		}
-		return lista;
 	}
 	
 	public Integer getId() {
@@ -85,7 +88,7 @@ public class Produto implements Serializable{
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
-
+	
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}
@@ -94,6 +97,9 @@ public class Produto implements Serializable{
 		this.itens = itens;
 	}
 
+	
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -32,7 +32,7 @@ public class ProdutoResource {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ProdutoDto>> find(
-			@RequestParam(value = "nome", defaultValue = "") String nome,
+			@RequestParam(value = "nome", defaultValue = "") String nome, // "nome" e "categorias" é o que o usuário digita na URL.
 			@RequestParam(value = "categorias", defaultValue = "") String categorias) {
 
 		String nomeDecoded = URL.decodeParam(nome);
@@ -44,6 +44,6 @@ public class ProdutoResource {
 		}
 		return ResponseEntity.ok().body(listDto);
 
-	}
 
+	}
 }

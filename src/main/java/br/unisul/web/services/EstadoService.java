@@ -44,4 +44,7 @@ public class EstadoService {
 		return rep.findAll();
 	}
 	
+	public List<Estado> search (String nome){
+		return rep.findDistinctByNomeContainingOrderByNome(nome);
+	}
 }

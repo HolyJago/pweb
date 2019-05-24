@@ -62,9 +62,33 @@ public class DbService {
 		Categoria cat6 = new Categoria(null, "Decoração");
 		Categoria cat7 = new Categoria(null, "Perfumaria");
 		
-		Estado e1 = new Estado(null, "Paraná");
-		Estado e2 = new Estado(null, "Santa Catarina");
-		Estado e3 = new Estado(null, "Rio Grande do Sul");
+		Estado e1 = new Estado(null, "Acre");
+		Estado e2 = new Estado(null, "Alagoas");
+		Estado e3 = new Estado(null, "Amapá");
+		Estado e4 = new Estado(null, "Amazonas");
+		Estado e5 = new Estado(null, "Bahia");
+		Estado e6 = new Estado(null, "Ceará");
+		Estado e7 = new Estado(null, "Distrito Federal");
+		Estado e8 = new Estado(null, "Espírito Santo");
+		Estado e9 = new Estado(null, "Goiás");
+		Estado e10 = new Estado(null, "Maranhão");
+		Estado e11 = new Estado(null, "Mato Grosso");
+		Estado e12 = new Estado(null, "Mato Grosso do Sul");
+		Estado e13 = new Estado(null, "Minas Gerais");
+		Estado e14 = new Estado(null, "Pará");
+		Estado e15 = new Estado(null, "Paraíba");
+		Estado e16 = new Estado(null, "Paraná");
+		Estado e17 = new Estado(null, "Pernambuco");
+		Estado e18 = new Estado(null, "Piauí");
+		Estado e19 = new Estado(null, "Rio de Janeiro");
+		Estado e20 = new Estado(null, "Rio Grande do Norte");
+		Estado e21 = new Estado(null, "Rio Grande do Sul");
+		Estado e22 = new Estado(null, "Rondônia");
+		Estado e23 = new Estado(null, "Roraima");
+		Estado e24 = new Estado(null, "Santa Catarina");
+		Estado e25 = new Estado(null, "São Paulo");
+		Estado e26 = new Estado(null, "Sergipe");
+		Estado e27 = new Estado(null, "Tocantins");
 		
 		Cidade c1 = new Cidade(null, "Curitiba", e1);
 		Cidade c2 = new Cidade(null, "Tubarão", e2);
@@ -77,7 +101,8 @@ public class DbService {
 		e2.getCidades().addAll(Arrays.asList(c2, c3, c4));
 		e3.getCidades().addAll(Arrays.asList(c5, c6));
 		
-		estadoRepository.saveAll(Arrays.asList(e1,e2,e3));
+		estadoRepository.saveAll(Arrays.asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, e16,
+				e17, e18, e19, e20, e21, e22, e23, e24, e25, e26, e27));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
 		
 		Produto p1 = new Produto(null, "Computador", 2000.00);
